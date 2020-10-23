@@ -5,9 +5,7 @@ const ul = document.getElementById('list-group')
 const div = document.getElementById('show-panel')
 const form = document.getElementById('location')
 const container = document.getElementById('container')
-const addNewBrewery = document.getElementById('add-new-brewery')
 const header = document.getElementById('header')
-const newBrewery = document.getElementById('new-brewery')
 const breweryTitle = document.getElementById('title')
 const navSearch = document.getElementById('search-bar')
 
@@ -35,7 +33,7 @@ const addToBreweryList = brewery => {
     ul.innerHTML += li
 }
 
-const fetchBreweryInfo = event => {
+const findBreweryInfo = event => {
     const breweryId = parseInt(event.target.dataset.id)
     const brewery = breweriesList.filter(brewery => {
         return brewery.id === breweryId
@@ -44,7 +42,6 @@ const fetchBreweryInfo = event => {
 }
 
 const showBrewery = brewery => {
-    debugger
     const search = brewery.name.split(' ').join('+') + `+${brewery.city}`
     const breweryInfo = `<h2>Name: ${brewery.name}</h2>
     <h4 class="capitalize">Type: ${brewery.brewery_type}</h4>
@@ -54,10 +51,6 @@ const showBrewery = brewery => {
     div.innerHTML = breweryInfo
 }
 
-ul.addEventListener('click', fetchBreweryInfo)
+ul.addEventListener('click', findBreweryInfo)
 form.addEventListener('submit', fetchBreweries)
-addNewBrewery.addEventListener('click', showNewBreweryForm)
-newBrewery.addEventListener('submit', addNewBreweryFetch)
 navSearch.addEventListener('submit', fetchBreweries)
-
-showNewBreweryForm()

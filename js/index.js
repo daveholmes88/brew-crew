@@ -49,10 +49,11 @@ const findBreweryInfo = event => {
 }
 
 const showBrewery = brewery => {
+    debugger
     const search = brewery.name.split(' ').join('+') + `+${brewery.city}`
     const breweryInfo = `<h2>Name: ${brewery.name}</h2>
     <h4 class="capitalize">Type: ${brewery.brewery_type}</h4>
-    <a href=${brewery.website} target='_blank'>${brewery.name}'s Website</a>
+    <a href=${brewery.website_url} target='_blank'>${brewery.name}'s Website</a>
     <h4>Address: ${brewery.street} ${brewery.city}, ${brewery.state}</h4>
     <a href=https://www.google.com/maps/search/${search} target='_blank'>Google Maps</a>`
     div.innerHTML = breweryInfo

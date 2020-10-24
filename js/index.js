@@ -26,6 +26,13 @@ const renderData = breweries => {
     ul.innerHTML = ''
     breweryTitle.innerHTML = "<h2 style='color: white' class='display-2 text-center'>Breweries:</h2>"
     breweriesList.forEach(brewery => addToBreweryList(brewery))
+    if (breweriesList.length === 50) {
+        addpaginator()
+    }
+}
+
+const addpaginator = () => {
+    console.log('++++++++++++++++++++++++++++++')
 }
 
 const addToBreweryList = brewery => {

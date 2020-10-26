@@ -1,6 +1,7 @@
 let breweriesList = []
 let city = ''
 let state = ''
+let page = 1
 const ul = document.getElementById('list-group')
 const div = document.getElementById('show-panel')
 const form = document.getElementById('location')
@@ -8,34 +9,42 @@ const container = document.getElementById('container')
 const header = document.getElementById('header')
 const breweryTitle = document.getElementById('title')
 const navSearch = document.getElementById('search-bar')
+const pagination = document.getElementById('pagination')
 
 
 const fetchBreweries = event => {
     event.preventDefault()
     state = event.target.state.value
-    city = event.target.city.value
+    city = event.target.city.
+        page = 1
     event.target.reset()
-    fetch(`https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}&per_page=50`)
+    breweryFetch()
+}
+
+const breweryFetch = () => {
+    console.log('+++++++++++++++++++++++')
+    fetch(`https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}&per_page=30&page=${page}`)
         .then(resp => resp.json())
         .then(breweries => renderData(breweries))
         .catch(err => console.log(err))
 }
 
 const renderData = breweries => {
+    debugger
     breweriesList = breweries
     ul.innerHTML = ''
     breweryTitle.innerHTML = "<h2 style='color: white' class='display-2 text-center'>Breweries:</h2>"
     breweriesList.forEach(brewery => addToBreweryList(brewery))
-    if (breweriesList.length === 50) {
-        addpaginator()
+    if (breweriesList.length === 30) {
+        pagination.style.display = 'block'
+    } else {
+        pagination.style.display = 'none'
     }
-}
-
-const addpaginator = () => {
-    console.log('++++++++++++++++++++++++++++++')
+    div.innerHTML = ''
 }
 
 const addToBreweryList = brewery => {
+    console.log('-------------------')
     const li = `<li id=${brewery.id} class='list-group-item' data-id=${brewery.id}>${brewery.name}</li>`
     ul.innerHTML += li
 }
@@ -49,7 +58,6 @@ const findBreweryInfo = event => {
 }
 
 const showBrewery = brewery => {
-    debugger
     const search = brewery.name.split(' ').join('+') + `+${brewery.city}`
     const breweryInfo = `<h2>Name: ${brewery.name}</h2>
     <h4 class="capitalize">Type: ${brewery.brewery_type}</h4>
@@ -59,6 +67,17 @@ const showBrewery = brewery => {
     div.innerHTML = breweryInfo
 }
 
+const newPage = (event) => {
+    if (event.target.innerText === ">>") {
+        page += 1
+        breweryFetch()
+    } else {
+        page -= 1
+        breweryFetch()
+    }
+}
+
 ul.addEventListener('click', findBreweryInfo)
 form.addEventListener('submit', fetchBreweries)
 navSearch.addEventListener('submit', fetchBreweries)
+pagination.addEventListener('click', newPage)

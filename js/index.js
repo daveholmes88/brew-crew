@@ -9,36 +9,42 @@ const container = document.getElementById('container')
 const header = document.getElementById('header')
 const breweryTitle = document.getElementById('title')
 const navSearch = document.getElementById('search-bar')
-const pagination = document.getElementById('pagination')
+const next = document.getElementById('next')
+const previous = document.getElementById('previous')
 
+const showPrevious = () => {
+    if (page > 1) {
+        previous.style.display = 'inline'
+    } else {
+        previous.style.display = 'none'
+    }
+}
 
 const fetchBreweries = event => {
     event.preventDefault()
     state = event.target.state.value
-    city = event.target.city.
-        page = 1
+    city = event.target.city.value
+    page = 1
     event.target.reset()
     breweryFetch()
 }
 
 const breweryFetch = () => {
-    console.log('+++++++++++++++++++++++')
-    fetch(`https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}&per_page=30&page=${page}`)
+    fetch(`https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}&page=${page}&per_page=25`)
         .then(resp => resp.json())
         .then(breweries => renderData(breweries))
         .catch(err => console.log(err))
 }
 
 const renderData = breweries => {
-    debugger
     breweriesList = breweries
     ul.innerHTML = ''
     breweryTitle.innerHTML = "<h2 style='color: white' class='display-2 text-center'>Breweries:</h2>"
     breweriesList.forEach(brewery => addToBreweryList(brewery))
-    if (breweriesList.length === 30) {
-        pagination.style.display = 'block'
+    if (breweriesList.length === 25) {
+        next.style.display = 'inline'
     } else {
-        pagination.style.display = 'none'
+        next.style.display = 'none'
     }
     div.innerHTML = ''
 }
@@ -58,26 +64,34 @@ const findBreweryInfo = event => {
 }
 
 const showBrewery = brewery => {
+    let phoneArray = brewery.phone.split('')
+    phoneArray.splice(3, 0, '-')
+    phoneArray.splice(7, 0, '-')
+    showPhone = phoneArray.join('')
     const search = brewery.name.split(' ').join('+') + `+${brewery.city}`
-    const breweryInfo = `<h2>Name: ${brewery.name}</h2>
+    const breweryInfo = `<h1>Name: ${brewery.name}</h1>
     <h4 class="capitalize">Type: ${brewery.brewery_type}</h4>
-    <a href=${brewery.website_url} target='_blank'>${brewery.name}'s Website</a>
+    <a href=${brewery.website_url} target='_blank'><h4>${brewery.name}'s Website</h4></a>
     <h4>Address: ${brewery.street} ${brewery.city}, ${brewery.state}</h4>
-    <a href=https://www.google.com/maps/search/${search} target='_blank'>Google Maps</a>`
+    <a href=https://www.google.com/maps/search/${search} target='_blank'><h4>Google Maps</h4></a>
+    <h4>Phone: ${showPhone}</h4>`
     div.innerHTML = breweryInfo
 }
 
-const newPage = (event) => {
-    if (event.target.innerText === ">>") {
-        page += 1
-        breweryFetch()
-    } else {
-        page -= 1
-        breweryFetch()
-    }
+const nextPage = () => {
+    page += 1
+    breweryFetch()
+    showPrevious()
+}
+
+const previousPage = () => {
+    page -= 1
+    breweryFetch()
+    showPrevious()
 }
 
 ul.addEventListener('click', findBreweryInfo)
 form.addEventListener('submit', fetchBreweries)
 navSearch.addEventListener('submit', fetchBreweries)
-pagination.addEventListener('click', newPage)
+next.addEventListener('click', nextPage)
+previous.addEventListener('click', previousPage)

@@ -2,14 +2,6 @@ body {
 	background-color: black; 
 } 
 
-/* h1 {
-	text-align: center;
-} */
-
-/* #header{
-	opacity: 0.5
-} */
-
 .container {
 	display: grid;
 	grid-template-columns: 5fr 9fr;	
@@ -32,8 +24,9 @@ body {
 	position: absolute;
   	right: 0px;
 }
+
 #show-panel {
-	color: white
+	color: white;
 }
 
 

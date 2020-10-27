@@ -35,22 +35,19 @@
 	</div>
 	<div class="container" id="container">
 		<div id="list-panel" class='row'>
-			<ul class="col-sm-10" id="list-group">
-
-			</ul>
-			<nav aria-label="Page navigation example">
-				<ul class="pagination" id="pagination" style="display:none">
-					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Previous">
-							>>
-						</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Next">
-							<< </a>
-					</li>
+			<div class='col'>
+				<ul class="col-sm-10" id="list-group">
 				</ul>
-			</nav>
+
+				<nav aria-label="Page navigation example" style="display:inline">
+					<ul class="pagination">
+						<li id='previous' style="display:none" class="page-item"><a class="page-link"
+								href="#">Previous</a></li>
+						<li id='next' style="display:none" class="page-item"><a class="page-link" href="#">Next</a></li>
+					</ul>
+				</nav>
+
+			</div>
 		</div>
 		<div id="show-panel" class="show-panel"></div>
 	</div>

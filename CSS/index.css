@@ -29,6 +29,14 @@ body {
 	color: white;
 }
 
+#list-panel {
+	height: 85vh; 
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+  }
+
 
 
 

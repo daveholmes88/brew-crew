@@ -27,6 +27,7 @@ const fetchBreweries = event => {
     page = 1
     event.target.reset()
     breweryFetch()
+    showPrevious()
 }
 
 const breweryFetch = () => {
@@ -50,7 +51,6 @@ const renderData = breweries => {
 }
 
 const addToBreweryList = brewery => {
-    console.log('-------------------')
     const li = `<li id=${brewery.id} class='list-group-item' data-id=${brewery.id}>${brewery.name}</li>`
     ul.innerHTML += li
 }
